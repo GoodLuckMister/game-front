@@ -36,8 +36,8 @@ export function create() {
 
             if (otherPlayers[id] === undefined && id !== socket.id) {
                 const data = players_data[id];
-                const p = this.add.sprite(data.x, data.y, 'enemy');
-                otherPlayers[id] = p;
+                const enemyPlayer = this.add.sprite(data.x, data.y, 'enemy');
+                otherPlayers[id] = enemyPlayer;
                 console.log("Created new player at (" + data.x + ", " + data.y + ")");
             }
             playersFound[id] = true;
@@ -90,6 +90,21 @@ export function create() {
 }
 
 export function update() {
+
+    for (let id in otherPlayers) {
+        const p = otherPlayers[id];
+        if (p.target_x !== undefined) {
+            p.x += (p.target_x - p.x) * 0.16;
+            p.y += (p.target_y - p.y) * 0.16;
+
+            const angle = p.target_rotation;
+            let dir = (angle - p.rotation) / (Math.PI * 2);
+            dir -= Math.round(dir);
+            dir = dir * Math.PI * 2;
+            p.rotation += dir * 0.16;
+        }
+    }
+
     if (player.sprite.x > WINDOW_WIDTH) {
         player.sprite.x = WINDOW_WIDTH
     }
@@ -137,6 +152,8 @@ export function update() {
     if (!this.input.keyboard.addKey('SPACE').isDown) this.shot = false;
 
     socket.emit('move-player', { x: player.sprite.x, y: player.sprite.y, angle: player.sprite.rotation })
+
+
 
 }
 

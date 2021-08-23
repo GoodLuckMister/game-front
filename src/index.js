@@ -19,9 +19,9 @@ const config = {
 
 const game = new Phaser.Game(config);
 ReactDOM.render(
-  <React.StrictMode>
-    <App game={game} />
-  </React.StrictMode>,
+
+  <App game={game} />,
+
   document.getElementById('root')
 );
 
