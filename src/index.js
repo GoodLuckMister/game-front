@@ -4,17 +4,20 @@ import Phaser from 'phaser';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import playGame from './game/game';
+import { preload, create, update } from './game/game';
 
-export const config = {
+const config = {
   type: Phaser.AUTO,
-  parent: "phaser",
   width: 800,
   height: 600,
-  scene: playGame
+  scene: {
+    preload: preload,
+    create: create,
+    update: update
+  }
 };
 
-export const game = new Phaser.Game(config);
+const game = new Phaser.Game(config);
 ReactDOM.render(
   <React.StrictMode>
     <App game={game} />

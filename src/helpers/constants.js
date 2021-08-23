@@ -1,5 +1,5 @@
 
-export const player = {
+export let player = {
     sprite: null,
     speed_x: 0,
     speed_y: 0,
